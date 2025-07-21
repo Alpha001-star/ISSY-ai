@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.92"/>
+  <title>Issy</title>
+  <meta name="description" content="DBSGPT- New academic assistant">
+  <meta name="keywords" content="DE-BRAINSTORMERS' ACADEMY, Obafemi Awolowo University, OAU, educational platform, practice questions, school mock exams, academic archives, Ile Ife, Nigeria, state-of-the-art labs, athletic excellence, creative arts, exam preparation, student resources, latest educational news, science lab, debate team, sports day, Prof Richard, technology in education, OAU MOCK EXAM, Examguide, Exam Guide, OAU Exam Guide">
+
+  <meta property="og:image" content="https://www.freepik.com/free-photo/robot-doing-peace-sign_958079.htm#fromView=search&page=1&position=6&uuid=ed722546-5163-421f-b484-5a03eab35cc2&query=Robot">
+  <meta property="og:url" content="https://dbsgpt.vercel.app">
+  <meta property="og:type" content="website">
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+  
+  <!-- Polyfill for MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+  <!-- MathJax config FIRST -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        processEscapes: true,
+      },
+      options: {
+        renderActions: {
+          addMenu: []
+        }
+      }
+    };
+  </script>
+
+  <!-- Load MathJax ONCE -->
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Marked.js for Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- html2canvas & jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script  src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+ 
+
+  <!-- Highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <!-- Smartlook Analytics -->
+  <script type='text/javascript'>
+    window.smartlook||(function(d) {
+      var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+      var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+      c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
+    })(document);
+    smartlook('init', '424bfe466de56c64d867be2f4112259c1c07021b', { region: 'eu' });
+  </script>
+  
+  <link rel="stylesheet" href="style.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+  <div class="chat-container">
+<header>
+  <div class="left-header">
+    <img src="ChatGPT Image Jul 20, 2025, 10_17_41 PM.png" alt="Profile" />
+    <div class="chat-title">Issy</div>
+  </div>
+  <div class="right-header">
+    <button id="newChatBtn" title="New Chat">
+      <i class="icon">&#x1F4AC;</i>
+    </button>
+    
+    <div id="historyWrapper" class="history-wrapper">
+      <button id="historyBtn" title="Chat History">
+        <i class="icon">&#x1F4D3;</i>
+      </button>
+      <div id="chatHistoryList" class="chat-history-dropdown" style="display: none;"></div>
+    </div>
+  </div>
+  <button id="cbtIconBtn" title="Practice Mode">
+  <i class="icon">&#x1F393;</i> <!-- graduation cap emoji -->
+  </button>
+    
+  
+</header>
+
+<div id="chat"></div>
+
+<div class="input-area">
+  <div class="input-wrapper">
+    <label for="imageInput" class="input-icon left-icon">
+      <i>&#128206;</i>
+    </label>
+    <div id="imagePreviewContainer" class="image-preview-container"></div>
+
+<!-- Fullscreen Preview -->
+<div id="fullscreenPreview" class="fullscreen-preview" style="display: none;">
+  <span id="closePreview" class="close-btn">&times;</span>
+  <img id="fullscreenImage" src="" />
+</div>
+    
+    
+    <!-- Updated file input element to accept both images and PDF files -->
+<input id="imageInput" type="file" multiple accept=".pdf,image/*" style="display: none;" />
+<textarea id="userInput" rows="1" placeholder="Type your message..."></textarea>
+<button id="recordBtn" class="input-icon right-icon">
+  <i id="micIcon">&#128308;</i>
+</button>
+</div>
+
+  <button onclick="sendMessage()">
+    <i>&#10148;</i>
+  </button>
+  
+  
+</div>
+  </div>
+<div id="cbtContainer" class="cbt-container" style="display: none;">
+  <div class="cbt-shape-bg"></div>
+  <div class="cbt-card">
+    <div class="cbt-header">
+      <h2>CBT PRACTICE MODE (AI POWERED)</h2>
+ <button id="exitCbtBtn" class="exit-btn">×</button>
+    </div>
+    
+    <div id="cbtContent">
+      <div class="cbt-input-wrapper">
+  <input id="cbtTopicInput" placeholder="Enter a topic..." />
+  <button onclick="startCbt()" class="start-inline-btn">🔼</button>
+        <label for="userMaterial" class="input-icon left-icon">
+      <i>&#128206;</i>
+        </label>
+</div>
+
+      
+      <div id="cbtQuestionArea" style="display: none;">
+  <div id="cbtQuestionContent"></div>
+  <button id="nextQuestionBtn" style="display: none;" class="next-btn">⏩</button>
+<label class="upload-label">
+  <input type="file" id="userMaterial" accept=".pdf,.txt,.docx" style="display: none;"/>
+        
+  </label>
+    </div>
+  </div>
+    </div>
+  
+        </div>
+    
+  
+                               
+
+
+  <script src="chatbot.js"></script>
+</body>
+</html>
